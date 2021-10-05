@@ -11,7 +11,7 @@
 // constructor WITHOUT memory allocation
 ChatBot::ChatBot() {
   // invalidate data handles
-  _image = nullptr; // DEBUG: problem 0?
+  _image = nullptr;
   _chatLogic = nullptr;
   _rootNode = nullptr;
 }
