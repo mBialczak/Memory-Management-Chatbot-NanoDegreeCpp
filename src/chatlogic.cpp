@@ -15,13 +15,15 @@ ChatLogic::ChatLogic()
 {
   //// STUDENT CODE
   ////
-
+  // DEBUG: removed in task5
   // create instance of chatbot
-  _chatBot = new ChatBot("../images/chatbot.png"); // TODO: most likely remove
+  // _chatBot = new ChatBot("../images/chatbot.png"); // TODO: most likely
+  // remove
 
   // add pointer to chatlogic so that chatbot answers can be passed on to the
   // GUI
-  _chatBot->SetChatLogicHandle(this);
+  // DEBUG: removed in task 5
+  // _chatBot->SetChatLogicHandle(this);
 
   ////
   //// EOF STUDENT CODE
@@ -31,7 +33,9 @@ ChatLogic::~ChatLogic()
 {
   //// STUDENT CODE
   // delete chatbot instance
-  delete _chatBot; // TODO: most likely remove
+
+  // NOTE: removeD in task 5 as no longer owned
+  // delete _chatBot; //
 
   // NOTE: deleted in task 3 due to unique_ptr on _nodes
   // delete all nodes
@@ -232,7 +236,7 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
     if ((*it)->GetNumberOfParents() == 0) {
 
       if (rootNode == nullptr) {
-        // NOTE: change might be needed later in TASK3/4/5
+        // NOTE: no more change might be needed later in TASK3/4/5
         rootNode = it->get(); // assign current node to root
       } else {
         std::cout << "ERROR : Multiple root nodes detected" << std::endl;
@@ -240,11 +244,26 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
     }
   }
 
-  // add chatbot to graph root node
-  _chatBot->SetRootNode(rootNode);
-  rootNode->MoveChatbotHere(_chatBot);
+  // NOTE: added local ChatBot in TASK 5
+  auto uptr_ChatBot = std::make_unique<ChatBot>("../images/chatbot.png");
 
-  ////
+  // NOTE: moved and modified here form constructor in task 5
+  // add pointer to chatlogic so that chatbot answers can be passed on to the
+  // GUI
+  // _chatBot->SetChatLogicHandle(this);
+  uptr_ChatBot->SetChatLogicHandle(this);
+
+  // NOTE: modified in TASK 5
+  // add chatbot to graph root node
+  // _chatBot->SetRootNode(rootNode);
+  uptr_ChatBot->SetRootNode(rootNode);
+
+  // copy handle (not onwned) to _chatBot before transfering ownership
+  _chatBot = uptr_ChatBot.get();
+
+  // NOTE: modified in TASK 5
+  // rootNode->MoveChatbotHere(_chatBot);
+  rootNode->MoveChatbotHere(std::move(uptr_ChatBot));
   //// EOF STUDENT CODE
 }
 

@@ -19,8 +19,11 @@ class GraphNode {
 
   // data handles (not owned)
   std::vector<GraphEdge*> _parentEdges; // edges to preceding nodes
-  ChatBot* _chatBot;
 
+  // NOTE: modified in Task5
+  // REVIEW: consider moving up to owned data handles
+  // ChatBot* _chatBot;
+  std::unique_ptr<ChatBot> _chatBot;
   ////
   //// EOF STUDENT CODE
 
@@ -50,7 +53,9 @@ class GraphNode {
   // void AddEdgeToChildNode(GraphEdge* edge);
   void AddEdgeToChildNode(std::unique_ptr<GraphEdge> edge);
 
-  void MoveChatbotHere(ChatBot* chatbot);
+  // NOTE: modifed in TASK5
+  // void MoveChatbotHere(ChatBot* chatbot);
+  void MoveChatbotHere(std::unique_ptr<ChatBot> chatbot);
 
   ////
   //// EOF STUDENT CODE
