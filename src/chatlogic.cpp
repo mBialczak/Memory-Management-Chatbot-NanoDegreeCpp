@@ -39,10 +39,11 @@ ChatLogic::~ChatLogic()
   //   delete *it;
   // }
 
+  // REVIEW:NOTE: removed in task 4 due to graphnode ownership of edges
   // delete all edges
-  for (auto it = std::begin(_edges); it != std::end(_edges); ++it) {
-    delete *it;
-  }
+  // for (auto it = std::begin(_edges); it != std::end(_edges); ++it) {
+  //   delete *it;
+  // }
 
   //// EOF STUDENT CODE
 }
@@ -176,7 +177,10 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
                   });
 
               // create new edge
-              GraphEdge* edge = new GraphEdge(id);
+              // NOTE: changed in TASK4
+              // GraphEdge* edge = new GraphEdge(id);
+              auto edge = std::make_unique<GraphEdge>(id);
+
               // NOTE: change applied in task 3
               // edge->SetChildNode(*childNode);
               edge->SetChildNode(childNode->get());
@@ -185,14 +189,21 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
               // edge->SetParentNode(*parentNode);
               edge->SetParentNode(parentNode->get());
 
-              _edges.push_back(edge);
+              // NOTE: removed in TASK4: seems that chatlogic doesn't need edges
+              // at all as ownership of edges is in graphnode
+              // _edges.push_back(edge);
 
               // find all keywords for current node
               AddAllTokensToElement("KEYWORD", tokens, *edge);
 
               // store reference in child node and parent node
-              (*childNode)->AddEdgeToParentNode(edge);
-              (*parentNode)->AddEdgeToChildNode(edge);
+              // NOTE: change applied in TASK4
+              // (*childNode)->AddEdgeToParentNode(edge);
+              (*childNode)->AddEdgeToParentNode(edge.get());
+
+              // NOTE: change applied in TASK4
+              (*parentNode)->AddEdgeToChildNode(std::move(edge));
+              // (*parentNode)->AddEdgeToChildNode(edge);
             }
 
             ////

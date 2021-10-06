@@ -16,8 +16,8 @@ class ChatLogic {
   //// STUDENT CODE
   // data handles (owned)
   std::vector<std::unique_ptr<GraphNode>> _nodes; // NOTE: task 3 change
-  std::vector<GraphEdge*>
-      _edges; // NOTE: task3 dosn't tell if need to modify this
+  // NOTE: remove from ChatLogic or at least REVIEW: if correct
+  // std::vector<GraphEdge*> _edges;
 
   //// EOF STUDENT CODE
 
