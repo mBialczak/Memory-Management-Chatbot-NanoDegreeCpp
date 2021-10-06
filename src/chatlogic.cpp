@@ -11,46 +11,9 @@
 #include "graphedge.h"
 #include "graphnode.h"
 
-ChatLogic::ChatLogic()
-{
-  //// STUDENT CODE
-  ////
-  // DEBUG: removed in task5
-  // create instance of chatbot
-  // _chatBot = new ChatBot("../images/chatbot.png"); // TODO: most likely
-  // remove
+ChatLogic::ChatLogic() { }
 
-  // add pointer to chatlogic so that chatbot answers can be passed on to the
-  // GUI
-  // DEBUG: removed in task 5
-  // _chatBot->SetChatLogicHandle(this);
-
-  ////
-  //// EOF STUDENT CODE
-}
-
-ChatLogic::~ChatLogic()
-{
-  //// STUDENT CODE
-  // delete chatbot instance
-
-  // NOTE: removeD in task 5 as no longer owned
-  // delete _chatBot; //
-
-  // NOTE: deleted in task 3 due to unique_ptr on _nodes
-  // delete all nodes
-  // for (auto it = std::begin(_nodes); it != std::end(_nodes); ++it) {
-  //   delete *it;
-  // }
-
-  // REVIEW:NOTE: removed in task 4 due to graphnode ownership of edges
-  // delete all edges
-  // for (auto it = std::begin(_edges); it != std::end(_edges); ++it) {
-  //   delete *it;
-  // }
-
-  //// EOF STUDENT CODE
-}
+ChatLogic::~ChatLogic() { }
 
 template <typename T>
 void ChatLogic::AddAllTokensToElement(
@@ -62,7 +25,6 @@ void ChatLogic::AddAllTokensToElement(
     token = std::find_if(token, tokens.end(),
         [&tokenID](const std::pair<std::string, std::string>& pair) {
           return pair.first == tokenID;
-          ;
         });
     if (token != tokens.end()) {
       element.AddToken(token->second); // add new keyword to edge
@@ -126,34 +88,23 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
 
           // node-based processing
           if (type->second == "NODE") {
-            //// STUDENT CODE
 
-            // NOTE: change applied in task 3
             // check if node with this ID exists already
             auto newNode = std::find_if(_nodes.begin(), _nodes.end(),
                 [&id](const auto& node) { return node->GetID() == id; });
-            // auto newNode = std::find_if(_nodes.begin(), _nodes.end(),
-            //     [&id](GraphNode* node) { return node->GetID() == id; });
 
             // create new element if ID does not yet exist
             if (newNode == _nodes.end()) {
-
-              // NOTE: change applied in task 3
-              // _nodes.emplace_back(new GraphNode(id));
               _nodes.emplace_back(std::make_unique<GraphNode>(id));
-
               newNode = _nodes.end() - 1; // get iterator to last element
 
               // add all answers to current node
-              // NOTE: should be ok but verify
               AddAllTokensToElement("ANSWER", tokens, **newNode);
             }
-            //// EOF STUDENT CODE
           }
 
           // edge-based processing
           if (type->second == "EDGE") {
-            //// STUDENT CODE
             // find tokens for incoming (parent) and outgoing (child) node
             auto parentToken = std::find_if(tokens.begin(), tokens.end(),
                 [](const std::pair<std::string, std::string>& pair) {
@@ -168,50 +119,25 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
               // get iterator on incoming and outgoing node via ID search
               auto parentNode = std::find_if(_nodes.begin(), _nodes.end(),
                   [&parentToken](const auto& node) {
-                    // NOTE: change applied in task 3
-                    // [&parentToken](GraphNode* node) {
                     return node->GetID() == std::stoi(parentToken->second);
                   });
               auto childNode = std::find_if(_nodes.begin(), _nodes.end(),
                   [&childToken](const auto& node) {
-                    // NOTE: change applied in task 3
-                    // _nodes.begin(), _nodes.end(), [&childToken](GraphNode*
-                    // node) {
                     return node->GetID() == std::stoi(childToken->second);
                   });
 
               // create new edge
-              // NOTE: changed in TASK4
-              // GraphEdge* edge = new GraphEdge(id);
               auto edge = std::make_unique<GraphEdge>(id);
-
-              // NOTE: change applied in task 3
-              // edge->SetChildNode(*childNode);
               edge->SetChildNode(childNode->get());
-
-              // NOTE: change applied in task 3
-              // edge->SetParentNode(*parentNode);
               edge->SetParentNode(parentNode->get());
-
-              // NOTE: removed in TASK4: seems that chatlogic doesn't need edges
-              // at all as ownership of edges is in graphnode
-              // _edges.push_back(edge);
 
               // find all keywords for current node
               AddAllTokensToElement("KEYWORD", tokens, *edge);
 
               // store reference in child node and parent node
-              // NOTE: change applied in TASK4
-              // (*childNode)->AddEdgeToParentNode(edge);
               (*childNode)->AddEdgeToParentNode(edge.get());
-
-              // NOTE: change applied in TASK4
               (*parentNode)->AddEdgeToChildNode(std::move(edge));
-              // (*parentNode)->AddEdgeToChildNode(edge);
             }
-
-            ////
-            //// EOF STUDENT CODE
           }
         } else {
           std::cout << "Error: ID missing. Line is ignored!" << std::endl;
@@ -227,8 +153,6 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
     return;
   }
 
-  //// STUDENT CODE
-
   // identify root node
   GraphNode* rootNode = nullptr;
   for (auto it = std::begin(_nodes); it != std::end(_nodes); ++it) {
@@ -236,7 +160,6 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
     if ((*it)->GetNumberOfParents() == 0) {
 
       if (rootNode == nullptr) {
-        // NOTE: no more change might be needed later in TASK3/4/5
         rootNode = it->get(); // assign current node to root
       } else {
         std::cout << "ERROR : Multiple root nodes detected" << std::endl;
@@ -244,47 +167,16 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
     }
   }
 
-  // NOTE: added local ChatBot in TASK 5
-  // REVIEW: below not needed if is in last line
-  // ChatBot bot { "../images/chatbot.png" };
-
-  // NOTE: moved and modified here form constructor in task 5
-  // add pointer to chatlogic so that chatbot answers can be passed on to the
-  // GUI
-  // _chatBot->SetChatLogicHandle(this);
-  // REVIEW: below not needed if is in last line
-  // bot.SetChatLogicHandle(this);
-
-  // NOTE: modified in TASK 5
-  // add chatbot to graph root node
-  // _chatBot->SetRootNode(rootNode);
-  // REVIEW: below not needed if is in last line
-  // bot.SetRootNode(rootNode);
-
-  // FIXME: need to find a way to update the _chatbot_hande  or copy handle (not
-  // onwned) to _chatBot before transfering ownership or after transfering
-  // candidates are: chatbot move constructor/operator or move me here
-  //_chatBot = &bot; //REVIEW: check if needed (it is suspicious as the address
-  // soon won't be valid)
-
-  // NOTE: modified in TASK 5
-  // rootNode->MoveChatbotHere(_chatBot);
-  // rootNode->MoveChatbotHere(std::move(uptr_ChatBot));
-  // rootNode->MoveChatbotHere(std::move(bot));
-
   ChatBot bot { "../images/chatbot.png", this, rootNode };
   SetChatbotHandle(&bot);
 
   rootNode->MoveChatbotHere(std::move(bot));
-  //// EOF STUDENT CODE
 }
 
 void ChatLogic::SetPanelDialogHandle(ChatBotPanelDialog* panelDialog)
 {
   _panelDialog = panelDialog;
 }
-
-void ChatLogic::SetChatbotHandle(ChatBot* chatbot) { _chatBot = chatbot; }
 
 void ChatLogic::SendMessageToChatbot(std::string message)
 {

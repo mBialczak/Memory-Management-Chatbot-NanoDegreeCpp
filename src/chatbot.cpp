@@ -18,20 +18,11 @@ ChatBot::ChatBot()
 }
 
 // constructor WITH memory allocation
-// REVIEW: modified below original constructor
-// ChatBot::ChatBot(std::string filename)
 ChatBot::ChatBot(std::string filename, ChatLogic* logic, GraphNode* rootNode)
+    : _chatLogic(logic)
+    , _rootNode(rootNode)
 {
   std::cout << "ChatBot Constructor" << std::endl;
-
-  // REVIEW: modified together with enhancing argument list, so restore if
-  // original restored
-  // // invalidate data handles
-  // _chatLogic = nullptr;
-  // _rootNode = nullptr;
-
-  _chatLogic = logic;
-  _rootNode = rootNode;
 
   // load image into heap memory
   _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
@@ -49,7 +40,6 @@ ChatBot::~ChatBot()
   }
 }
 
-//// STUDENT CODE
 // Move constructor
 ChatBot::ChatBot(ChatBot&& other)
 {
@@ -57,14 +47,14 @@ ChatBot::ChatBot(ChatBot&& other)
 
   // copy values from the old object
   _image = other._image;
-  _currentNode = other._currentNode; // NOTE: not sure if Necessary
-  _rootNode = other._rootNode; // NOTE: not sure if Necessary
+  _currentNode = other._currentNode;
+  _rootNode = other._rootNode;
   _chatLogic = other._chatLogic;
-  // NOTE: In TASK5 added this to updated ChatLogic after move
   _chatLogic->SetChatbotHandle(this);
+
   // invalidate pointers of the old object
-  other._image = NULL; // NOTE: NULL instead nullptr for wxWidgets compability
-  other._currentNode = nullptr; // NOTE: not sure if should be done
+  other._image = NULL; // NULL instead nullptr for wxWidgets compability
+  other._currentNode = nullptr;
   other._rootNode = nullptr;
   other._chatLogic = nullptr;
 }
@@ -79,22 +69,19 @@ ChatBot& ChatBot::operator=(ChatBot&& other)
 
   // copy values from the old object
   _image = other._image;
-  _currentNode = other._currentNode; // NOTE: not sure if Necessary
-  _rootNode = other._rootNode; // NOTE: not sure if Necessary
+  _currentNode = other._currentNode;
+  _rootNode = other._rootNode;
   _chatLogic = other._chatLogic;
-
-  // NOTE: In TASK5 added this to updated ChatLogic after move
   _chatLogic->SetChatbotHandle(this);
 
   // invalidate pointers of the old object
-  other._image = NULL; // NOTE: NULL instad nullptr for wxWidgets compability
-  other._currentNode = nullptr; // NOTE: not sure if should be done
+  other._image = NULL; // NULL instad nullptr for wxWidgets compability
+  other._currentNode = nullptr; //
   other._rootNode = nullptr;
   other._chatLogic = nullptr;
 
   return *this;
 }
-//// EOF STUDENT CODE
 
 void ChatBot::ReceiveMessageFromUser(std::string message)
 {

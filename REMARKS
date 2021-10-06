@@ -1,0 +1,54 @@
+## In the chatbot.h and chatbot.cpp:
+
+1. I decided to disable the copy constructor and assignment operator instad of implementing them, as I noticed that we only intend to move the chatbot.
+2. I have modified the chatbot constructor (taking more arguments)
+
+## TASK 5
+
+I was able to reproduce the console output shown on the instruction materials, that is:
+
+ChatBot Constructor
+ChatBot Move Constructor
+ChatBot Move Assignment operator
+ChatBot Destructor
+ChatBot Destructor
+ChatBot Move Constructor
+ChatBot Move Assignment operator
+ChatBot Destructor
+ChatBot Move Constructor
+ChatBot Move Assignment operator
+ChatBot Destructor
+ChatBot Destructor
+ChatBot Destructor
+ChatBot Destructor
+ChatBot Destructor
+ChatBot Destructor
+ChatBot Destructor
+ChatBot Destructor
+ChatBot Destructor
+
+but I have realised that I can optimize the code a bit by changing the graphnode.h and graphnode.cpp
+from
+void GraphNode::MoveChatbotHere(ChatBot chatbot)
+
+to  
+void GraphNode::MoveChatbotHere(ChatBot&& chatbot)".
+
+In this way some calls to move copy constructors and destructors could be spared, so only the Move Assignment operator is called (although the move constructor is still implemented):
+
+ChatBot Constructor
+ChatBot Move Assignment operator
+ChatBot Destructor
+ChatBot Move Assignment operator
+ChatBot Move Assignment operator
+ChatBot Move Assignment operator
+ChatBot Move Assignment operator
+ChatBot Move Assignment operator
+ChatBot Destructor
+ChatBot Destructor
+ChatBot Destructor
+ChatBot Destructor
+ChatBot Destructor
+ChatBot Destructor
+ChatBot Destructor
+ChatBot Destructor

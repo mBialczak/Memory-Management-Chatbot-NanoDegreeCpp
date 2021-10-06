@@ -2,7 +2,7 @@
 #define CHATLOGIC_H_
 
 #include "chatgui.h"
-#include <memory> //NOTE: verify if needed
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -13,13 +13,8 @@ class GraphNode;
 
 class ChatLogic {
   private:
-  //// STUDENT CODE
   // data handles (owned)
-  std::vector<std::unique_ptr<GraphNode>> _nodes; // NOTE: task 3 change
-  // NOTE: remove from ChatLogic or at least REVIEW: if correct
-  // std::vector<GraphEdge*> _edges;
-
-  //// EOF STUDENT CODE
+  std::vector<std::unique_ptr<GraphNode>> _nodes;
 
   // data handles (not owned)
   GraphNode* _currentNode;
