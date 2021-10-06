@@ -23,8 +23,10 @@ class GraphNode {
   // NOTE: modified in Task5
   // NOTE: turned into private property
   // ChatBot* _chatBot;
+  // ChatBot&& _chatBot;
+  // std::unique_ptr<ChatBot> _chatBot; //NOTE: another try
   ChatBot _chatBot;
-  ////
+
   //// EOF STUDENT CODE
 
   // proprietary members
@@ -55,6 +57,7 @@ class GraphNode {
 
   // NOTE: modifed in TASK 5
   // void MoveChatbotHere(ChatBot* chatbot);
+  // void MoveChatbotHere(ChatBot&& chatbot);
   void MoveChatbotHere(ChatBot&& chatbot);
 
   ////

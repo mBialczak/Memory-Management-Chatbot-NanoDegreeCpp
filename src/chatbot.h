@@ -24,7 +24,10 @@ class ChatBot {
   public:
   // constructors / destructors
   ChatBot(); // constructor WITHOUT memory allocation
-  ChatBot(std::string filename); // constructor WITH memory allocation
+  // NOTE modified original constructor below
+  // ChatBot(std::string filename); // constructor WITH memory allocation
+  ChatBot(std::string filename, ChatLogic* logic, GraphNode* rootnode);
+
   ~ChatBot();
 
   //// STUDENT CODE

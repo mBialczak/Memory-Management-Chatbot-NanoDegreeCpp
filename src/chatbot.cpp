@@ -18,13 +18,20 @@ ChatBot::ChatBot()
 }
 
 // constructor WITH memory allocation
-ChatBot::ChatBot(std::string filename)
+// REVIEW: modified below original constructor
+// ChatBot::ChatBot(std::string filename)
+ChatBot::ChatBot(std::string filename, ChatLogic* logic, GraphNode* rootNode)
 {
   std::cout << "ChatBot Constructor" << std::endl;
 
-  // invalidate data handles
-  _chatLogic = nullptr;
-  _rootNode = nullptr;
+  // REVIEW: modified together with enhancing argument list, so restore if
+  // original restored
+  // // invalidate data handles
+  // _chatLogic = nullptr;
+  // _rootNode = nullptr;
+
+  _chatLogic = logic;
+  _rootNode = rootNode;
 
   // load image into heap memory
   _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
