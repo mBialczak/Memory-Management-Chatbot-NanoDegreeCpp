@@ -245,25 +245,29 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
   }
 
   // NOTE: added local ChatBot in TASK 5
-  auto uptr_ChatBot = std::make_unique<ChatBot>("../images/chatbot.png");
+  ChatBot bot { "../images/chatbot.png" };
 
   // NOTE: moved and modified here form constructor in task 5
   // add pointer to chatlogic so that chatbot answers can be passed on to the
   // GUI
   // _chatBot->SetChatLogicHandle(this);
-  uptr_ChatBot->SetChatLogicHandle(this);
+  bot.SetChatLogicHandle(this);
 
   // NOTE: modified in TASK 5
   // add chatbot to graph root node
   // _chatBot->SetRootNode(rootNode);
-  uptr_ChatBot->SetRootNode(rootNode);
+  bot.SetRootNode(rootNode);
 
-  // copy handle (not onwned) to _chatBot before transfering ownership
-  _chatBot = uptr_ChatBot.get();
+  // FIXME: need to find a way to update the _chatbot_hande  or copy handle (not
+  // onwned) to _chatBot before transfering ownership or after transfering
+  // candidates are: chatbot move constructor/operator or move me here
+  //_chatBot = &bot; //REVIEW: check if needed (it is suspicious as the address
+  // soon won't be valid)
 
   // NOTE: modified in TASK 5
   // rootNode->MoveChatbotHere(_chatBot);
-  rootNode->MoveChatbotHere(std::move(uptr_ChatBot));
+  // rootNode->MoveChatbotHere(std::move(uptr_ChatBot));
+  rootNode->MoveChatbotHere(std::move(bot));
   //// EOF STUDENT CODE
 }
 
