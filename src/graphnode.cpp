@@ -1,6 +1,7 @@
 #include "graphnode.h"
 #include "graphedge.h"
 
+// NOTE: possible small improvement
 GraphNode::GraphNode(int id) { _id = id; }
 
 GraphNode::~GraphNode()
