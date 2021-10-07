@@ -28,10 +28,10 @@ class ChatBot {
 
   ~ChatBot();
 
-  ChatBot(const ChatBot& other) = delete;
-  ChatBot(ChatBot&& ohter); // MOVE constructor
-  ChatBot& operator=(const ChatBot& other) = delete;
-  ChatBot& operator=(ChatBot&& other); // MOVE assignment
+  ChatBot(const ChatBot& other);
+  ChatBot(ChatBot&& ohter);
+  ChatBot& operator=(const ChatBot& other);
+  ChatBot& operator=(ChatBot&& other);
 
   // getters / setters
   void SetCurrentNode(GraphNode* node);

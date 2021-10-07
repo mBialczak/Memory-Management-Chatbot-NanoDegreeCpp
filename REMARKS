@@ -1,7 +1,6 @@
 ## In the chatbot.h and chatbot.cpp:
 
-1. I decided to disable the copy constructor and assignment operator instad of implementing them, as I noticed that we only intend to move the chatbot.
-2. I have modified the chatbot constructor (taking more arguments)
+1.  I have modified the chatbot constructor (taking more arguments)
 
 ## TASK 5
 

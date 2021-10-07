@@ -10,22 +10,21 @@
 
 // constructor WITHOUT memory allocation
 ChatBot::ChatBot()
+    : _image(nullptr)
+    , _currentNode(nullptr)
+    , _rootNode(nullptr)
+    , _chatLogic(nullptr)
 {
-  // invalidate data handles
-  _image = nullptr;
-  _chatLogic = nullptr;
-  _rootNode = nullptr;
 }
 
 // constructor WITH memory allocation
 ChatBot::ChatBot(std::string filename, ChatLogic* logic, GraphNode* rootNode)
-    : _chatLogic(logic)
+    : _image(new wxBitmap { filename, wxBITMAP_TYPE_PNG })
+    , _currentNode(nullptr)
     , _rootNode(rootNode)
+    , _chatLogic(logic)
 {
   std::cout << "ChatBot Constructor" << std::endl;
-
-  // load image into heap memory
-  _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
 }
 // destructor
 ChatBot::~ChatBot()
@@ -33,23 +32,32 @@ ChatBot::~ChatBot()
   std::cout << "ChatBot Destructor" << std::endl;
 
   // deallocate heap memory
-  if (_image != NULL) // Attention: wxWidgets used NULL and not nullptr
-  {
+  // NULL instad of nullptr for wxWidgets compability
+  if (_image != NULL) {
     delete _image;
     _image = NULL;
   }
 }
 
+// Copy constructor
+ChatBot::ChatBot(const ChatBot& other)
+    : _image(new wxBitmap { *(other._image) })
+    , _currentNode(other._currentNode)
+    , _rootNode(other._rootNode)
+    , _chatLogic(other._chatLogic)
+{
+  std::cout << "ChatBot Copy Constructor" << std::endl;
+}
+
 // Move constructor
 ChatBot::ChatBot(ChatBot&& other)
+    : _image(other._image)
+    , _currentNode(other._currentNode)
+    , _rootNode(other._rootNode)
+    , _chatLogic(other._chatLogic)
 {
   std::cout << "ChatBot Move Constructor" << std::endl;
 
-  // copy values from the old object
-  _image = other._image;
-  _currentNode = other._currentNode;
-  _rootNode = other._rootNode;
-  _chatLogic = other._chatLogic;
   _chatLogic->SetChatbotHandle(this);
 
   // invalidate pointers of the old object
@@ -59,13 +67,42 @@ ChatBot::ChatBot(ChatBot&& other)
   other._chatLogic = nullptr;
 }
 
+ChatBot& ChatBot::operator=(const ChatBot& other)
+{
+  std::cout << "ChatBot Assignment operator" << std::endl;
+
+  if (this == &other) {
+    return *this;
+  }
+
+  // deallocate owned heap memory
+  // NULL instad of nullptr for wxWidgets compability
+  if (_image != NULL) {
+    delete _image;
+  }
+
+  _image = new wxBitmap { *(other._image) };
+  _currentNode = other._currentNode;
+  _rootNode = other._rootNode;
+  _chatLogic = other._chatLogic;
+
+  return *this;
+}
+
 // Move assignment
 ChatBot& ChatBot::operator=(ChatBot&& other)
 {
   std::cout << "ChatBot Move Assignment operator" << std::endl;
 
-  if (this == &other)
+  if (this == &other) {
     return *this;
+  }
+
+  // deallocate owned heap memory
+  // NULL instad of nullptr for wxWidgets compability
+  if (_image != NULL) {
+    delete _image;
+  }
 
   // copy values from the old object
   _image = other._image;
@@ -85,7 +122,8 @@ ChatBot& ChatBot::operator=(ChatBot&& other)
 
 void ChatBot::ReceiveMessageFromUser(std::string message)
 {
-  // loop over all edges and keywords and compute Levenshtein distance to query
+  // loop over all edges and keywords and compute Levenshtein distance to
+  // query
   typedef std::pair<GraphEdge*, int> EdgeDist;
   std::vector<EdgeDist> levDists; // format is <ptr,levDist>
 
@@ -100,7 +138,8 @@ void ChatBot::ReceiveMessageFromUser(std::string message)
   // select best fitting edge to proceed along
   GraphNode* newNode;
   if (levDists.size() > 0) {
-    // sort in ascending order of Levenshtein distance (best fit is at the top)
+    // sort in ascending order of Levenshtein distance (best fit is at the
+    // top)
     std::sort(levDists.begin(), levDists.end(),
         [](const EdgeDist& a, const EdgeDist& b) {
           return a.second < b.second;
