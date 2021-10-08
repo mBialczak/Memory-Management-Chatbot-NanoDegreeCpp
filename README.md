@@ -2,8 +2,8 @@
 
 This project was an examination assigment for the third course in the [Udacity C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213): Memory Management.
 The source code provided as a course material was almost fully functional - with one bug to remove. But the main goal was to optimize the code with regard to the resource managment policy. The starter code memory management was based purely on raw pointers.
-As a studuent I was given five tasks, completion of which optimized the project,introducing smart pointers and move semantics.
-In general I have restructured the overall resource managment policy.
+As a studuent I was given five tasks, completion of which optimized the project, introducing smart pointers and move semantics.
+In general, I have restructured the overall resource managment policy.
 
 <img src="images/chatbot_demo.gif"/>
 
@@ -33,7 +33,7 @@ The ChatBot code creates a dialogue where users can ask questions about some asp
 3. Compile: `cmake .. && make`
 4. Run it: `./membot`.
 
-## Project Task Details resolved during the assignment given to the student.
+## Project Tasks details resolved during the assignment given to the student.
 
 In the starter code provided, the program crashed when the window was closed. There was a small bug hidden, which was related to improper memory management. So first warm-up task was to find this bug and remove it.
 
