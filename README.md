@@ -1,8 +1,9 @@
-# CPPND: Memory Management Chatbot
+# Memory Management Chatbot
 
-This project was an examination assigment for the for the third course in the [Udacity C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213): Memory Management.
+This project was an examination assigment for the third course in the [Udacity C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213): Memory Management.
 The source code provided as a course material was almost fully functional - with one bug to remove. But the main goal was to optimize the code with regard to the resource managment policy. The starter code was based purely on raw pointers usage for the memory management.
-As a studuent I was given five task, completion of which optimized the project introducing smart pointers, move semantics and have restructured the overall resource managment policy.
+As a studuent I was given five tasks, completion of which optimized the project introducing smart pointers, move semantics.
+In general I have restructured the overall resource managment policy.
 
 <img src="images/chatbot_demo.gif"/>
 
@@ -34,9 +35,9 @@ The ChatBot code creates a dialogue where users can ask questions about some asp
 
 ## Project Task Details resolved during the assignment given to the student.
 
-In the starter code provided, the program crashed when the window was closed. There was a small bug hidden somewhere, which has something to do with improper memory management. So your first warm-up task was to find this bug and remove it.
+In the starter code provided, the program crashed when the window was closed. There was a small bug hidden, which was related to improper memory management. So first warm-up task was to find this bug and remove it.
 
-Aside from the bug mentioned above, there were five additional major student tasks in the Memory Management chatbot project, which are:
+Aside from the bug mentioned above, there were five additional major student tasks in the Memory Management chatbot project:
 
 ### Task 1 : Exclusive Ownership 1
 
@@ -44,7 +45,7 @@ In file `chatgui.h` / `chatgui.cpp`, `_chatLogic` had to be made an exclusive re
 
 ### Task 2 : The Rule Of Five
 
-In file `chatbot.h` / `chatbot.cpp`, changes were made to the class `ChatBot` such that it complies with the Rule of Five. I made sure to properly allocate / deallocate memory resources on the heap and also copy member data where it makes sense. In each of the methods (e.g. the copy constructor), a string of the type "ChatBot Copy Constructor" is printed to the console so that you can see which method is called in later examples.
+In file `chatbot.h` / `chatbot.cpp`, changes were made to the class `ChatBot` such that it complies with the Rule of Five. I made sure to properly allocate / deallocate memory resources on the heap and also copy member data where it makes sense. In each of the methods (e.g. the copy constructor), a string of the type "ChatBot Copy Constructor" is printed to the console so that you can see which method is called upon program execution.
 
 ### Task 3 : Exclusive Ownership 2
 
@@ -52,7 +53,7 @@ In file `chatlogic.h` / `chatlogic.cpp`, the vector `_nodes` was adapted in a wa
 
 ### Task 4 : Moving Smart Pointers
 
-In files `chatlogic.h` / `chatlogic.cpp` and `graphnode.h` / `graphnode.cpp` the ownership of all instances of `GraphEdge` was change in a way such that each instance of `GraphNode` exclusively owns the outgoing `GraphEdges` and holds non-owning references to incoming `GraphEdges`. This was achieved with the use of an appropriate smart pointers and additional changes to the program code based on move semantics.
+In files `chatlogic.h` / `chatlogic.cpp` and `graphnode.h` / `graphnode.cpp` the ownership of all instances of `GraphEdge` was changed in a way such that each instance of `GraphNode` exclusively owns the outgoing `GraphEdges` and holds non-owning references to incoming `GraphEdges`. This was achieved with the use of an appropriate smart pointers and additional changes to the program code based on move semantics.
 
 ### Task 5 : Moving the ChatBot
 
