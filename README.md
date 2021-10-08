@@ -1,8 +1,8 @@
 # Memory Management Chatbot
 
 This project was an examination assigment for the third course in the [Udacity C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213): Memory Management.
-The source code provided as a course material was almost fully functional - with one bug to remove. But the main goal was to optimize the code with regard to the resource managment policy. The starter code was based purely on raw pointers usage for the memory management.
-As a studuent I was given five tasks, completion of which optimized the project introducing smart pointers, move semantics.
+The source code provided as a course material was almost fully functional - with one bug to remove. But the main goal was to optimize the code with regard to the resource managment policy. The starter code memory management was based purely on raw pointers.
+As a studuent I was given five tasks, completion of which optimized the project,introducing smart pointers and move semantics.
 In general I have restructured the overall resource managment policy.
 
 <img src="images/chatbot_demo.gif"/>
@@ -57,4 +57,4 @@ In files `chatlogic.h` / `chatlogic.cpp` and `graphnode.h` / `graphnode.cpp` the
 
 ### Task 5 : Moving the ChatBot
 
-In file `chatlogic.cpp`, a local `ChatBot` instance was created on the stack at the bottom of function `LoadAnswerGraphFromFile`. Then, move semantics was used to pass the `ChatBot` instance into the root node. I made sure that `ChatLogic` has no ownership relation to the `ChatBot` instance and thus is no longer responsible for memory allocation and deallocation. When the program is executed, for the program workflow demonstration purposes, messages are printed, showing the part of the Rule of Five components of `ChatBot` in action.
+In file `chatlogic.cpp`, a local `ChatBot` instance was created on the stack at the bottom of function `LoadAnswerGraphFromFile`. Then, move semantics was used to pass the `ChatBot` instance into the root node. I made sure that `ChatLogic` has no ownership relation to the `ChatBot` instance and thus is no longer responsible for memory allocation and deallocation. When the program is executed, messages are printed for demonstration purposes, showing the part of the Rule of Five components of `ChatBot` in action.
