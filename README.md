@@ -5,9 +5,9 @@
 ## Introduction
 
 This project was an examination assigment for the third course in the [Udacity C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213): Memory Management.
-The source code provided as a course material was almost fully functional - with one bug to remove. But the main goal was to optimize the code with regard to the resource managment policy. The starter code memory management was based purely on raw pointers.
-As a studuent I was given five tasks, completion of which optimized the project, introducing smart pointers and move semantics.
-In general, I have restructured the overall resource managment policy.
+The source code provided as a course material was almost fully functional - with one bug to remove. But the main goal was to optimize the code with regard to the resource management policy. The starter code memory management was based purely on raw pointers.
+As a student I was given five tasks, completion of which optimized the project, introducing smart pointers and move semantics.
+In general, I have restructured the overall resource management policy.
 
 
 The ChatBot code creates a dialogue where users can ask questions about some aspects of memory management in C++. After the knowledge base of the chatbot has been loaded from a text file, a knowledge graph representation is created in computer memory, where chatbot answers represent the graph nodes and user queries represent the graph edges. After a user query has been sent to the chatbot, the Levenshtein distance is used to identify the most probable answer.
